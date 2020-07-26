@@ -50,9 +50,23 @@ function userInput(){
   } 
 
   confirmNumbers = confirm("Do you want numbers in your password?");
+    if(confirmNumbers){
+      addNumber();
+    }
   confirmUpper = confirm("Do you want uppercase letters?");
+  if(confirmUpper){
+    addUpper();
+  }
   confirmLower = confirm("Do you want lowercase letters?");
+  if(confirmLower){
+    addLower();
+  }
   confirmSpecial = confirm("Do you want special characters?");
+  if(confirmSpecial){
+    addSpecial();
+  }
+    //Above set of confirms selects which stypeset of characters the user wants then inputs at 
+    //least one random character of the each type selected into the password to meet the requirements
 
   console.log("Want numbers?" + confirmNumbers);
   console.log("Want numbers?" + confirmUpper);
@@ -61,7 +75,7 @@ function userInput(){
 }
   
 function typeSet(){
-  if(!confirmLower || !confirmNumbers || !confirmSpecial || !confirmUpper ){
+  if(!confirmLower && !confirmNumbers && !confirmSpecial && !confirmUpper ){
     alert("You need at least one typeset of character to generate the password from, try again!")
     userInput();
   }
@@ -77,48 +91,49 @@ function typeSet(){
 
 // Include in password at least one letter with the user's choices of numbers, special chars, uppercase and/or lowercase chars
 // to meet user's requiremence
-function addToPassword(){
+function addNumber(){
   if (confirmNumbers) {
     var index = Math.floor(Math.random() * numberArr.length);
     basePassword += numberArr[index];
   }
   console.log(basePassword);
+}
 
 
-
+function addUpper(){
   if (confirmUpper) {
     var index = Math.floor(Math.random() * uppderCaseArr.length);
     basePassword += uppderCaseArr[index];
   }
   console.log(basePassword);
+}
 
-
-
+function addLower(){
   if (confirmLower) {
     var index = Math.floor(Math.random() * lowerCaseArr.length);
     basePassword += lowerCaseArr[index];
   }
   console.log(basePassword);
+}
 
-
-
+function addSpecial(){
   if (confirmSpecial) {
     var index = Math.floor(Math.random() * specialArr.length);
     basePassword += specialArr[index];
   }
   console.log(basePassword);
-  
 }
 
 // Function: 
 function generatePassword() {
+  userInput(); //gets user input for password length and typesets of characters wanted
+  typeSet(); //checks that at least one typeset of characters is selected
+  
   var remaining = lengthChosen - basePassword.length;
   var allChosenStr = "";
 
   // you could call confirm function here
-  userInput();
-  typeSet();
-  addToPassword();
+  
   // after implementing the required chars, create a string candidates of strings for random selections
   if (confirmNumbers) {
     allChosenStr += numberStr;
@@ -132,7 +147,7 @@ function generatePassword() {
   if (confirmSpecial) {
     allChosenStr += specialChars;
   }
-  console.log(allChosenStr);
+  console.log(allChosenStr); //string of all possible characters wanted for the password is generated
 
   for (var i = 0; i < remaining; i++) {
     var index = Math.floor(Math.random() * allChosenStr.length);
@@ -165,6 +180,8 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
+
+  basePassword = "";
 
 }
 
