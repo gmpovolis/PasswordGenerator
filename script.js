@@ -69,9 +69,9 @@ function userInput(){
     //least one random character of the each type selected into the password to meet the requirements
 
   console.log("Want numbers?" + confirmNumbers);
-  console.log("Want numbers?" + confirmUpper);
-  console.log("Want numbers?" + confirmLower);
-  console.log("Want numbers?" + confirmSpecial);
+  console.log("Want letters upper?" + confirmUpper);
+  console.log("Want letters lower?" + confirmLower);
+  console.log("Want special characters?" + confirmSpecial);
 }
   
 function typeSet(){
@@ -157,14 +157,32 @@ function generatePassword() {
   console.log('Password before randomized order', basePassword);
 
   // Randomize the order of chars in the password - can be skipped or add your own code
-  // var pwdArr = basePassword.split("");
-  // var randomOrdered = [];
-  // randomOrdered.push(pwdArr[pwdArr.length - 1]);
-  // randomOrdered.push(pwdArr[pwdArr.length - 2]);
-  // for (var i = 0; i < (pwdArr.length - 2); i++) {
-  //   randomOrdered.push(pwdArr[i]);
-  // };
-  // basePassword = randomOrdered.join("");
+  // My own randomization code, write the back half of the password in ascending index order then the first half in decending order
+  var rPass = basePassword.split("");
+  var randomOrdered = [];
+  if(basePassword.length % 2 === 0){
+    var rIndex1 = (basePassword.length/2);
+    var isEven = true;
+  } else{
+    var rIndex1 = (basePassword.length-1)/2;
+    var isEven = false;
+  }
+  while(rIndex1<basePassword.length){
+    console.log(rIndex1);
+    randomOrdered.push(rPass[rIndex1]);
+    rIndex1++;
+  }
+  if(isEven){
+    rIndex1= (basePassword.length/2)-1;
+  } else {
+    rIndex1 = ((basePassword.length-1)/2)-1;
+  }
+  while(rIndex1>-1){
+    console.log(rIndex1);
+    randomOrdered.push(rPass[rIndex1]);
+    rIndex1--;
+  }
+  basePassword = randomOrdered.join("");
 
 
   console.log("Final password", basePassword);
@@ -181,7 +199,7 @@ function writePassword() {
 
   passwordText.value = password;
 
-  basePassword = "";
+  basePassword = ""; // Resets the value of the password so it can generate multiple passwords without having to refresh
 
 }
 
